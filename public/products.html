@@ -1,0 +1,241 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>Staff Portal</title>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-firestore.js"></script>
+
+
+  <script src="app.js"></script>
+  <script src="product.js"></script>
+
+
+
+
+
+
+
+
+</head>
+
+<body class="grey lighten-3">
+
+  <!-- Navbar -->
+  <div id="navBar">
+
+    <nav class="z-depth-1 grey lighten-5">
+      <div class="nav-wrapper container">
+
+        <ul id="nav-mobile" class="right hide-on-small-only">
+          <li>
+            <a href="#" class="grey-text modal-trigger" data-target="modal-account">Settings</a>
+          </li>
+          <li>
+            <a href="#" class="grey-text" id="logout">Logout</a>
+          </li>
+          <li>
+            <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Add User</a>
+          </li>
+          <li>
+            <a href="index.html" class="grey-text">Orders</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Manage Products-->
+
+  <div id="manage-products" class="container">
+    <div>
+      <h4>Products</h4><br />
+
+      <form onsubmit="addProduct()" id="productForm">
+
+        <div class="input-field" id="categoryName">
+          <select>
+
+            <option value="Starters">Starters</option>
+            <option value="Classics">Classics</option>
+            <option value="Fries">Fries</option>
+            <option value="Pizza">Pizza</option>
+            <option value="Maccaroni">Maccaroni</option>
+            <option value="Vegan">Vegan</option>
+            <option value="Sandwich">Sandwich</option>
+            <option value="Kids">Kids</option>
+            <option value="Salad">Salad</option>
+            <option value="Side">Side</option>
+            <option value="Burger">Burger</option>
+            <option value="Dessert">Dessert</option>
+          </select>
+          <label>Product Type</label>
+        </div> <br>
+
+
+        <div class="input-field">
+          <input type="text" id="productname" required>
+          <label for="name">Product name</label>
+        </div>
+
+        <div class="input-field">
+          <input type="number" min="1" step="any" id="productPrice" required>
+          <label for="price">Product Price</label>
+        </div>
+
+        <div class="input-field">
+          <input type="text" id="description" required>
+          <label for="Category">Description</label>
+        </div>
+
+        <div class="input-field">
+          <select multiple id="allergen">
+            <option value="None">Celery</option>
+            <option value="Celery">Celery</option>
+            <option value="Gluten">Gluten</option>
+            <option value="Crustaceans">Crustaceans</option>
+            <option value="Egg">Egg</option>
+            <option value="Fish">Fish</option>
+            <option value="Lupin">Lupin</option>
+            <option value="Milk">Milk</option>
+            <option value="Molluscs">Molluscs</option>
+            <option value="Mustard">Mustard</option>
+            <option value="Peanuts">Peanuts</option>
+            <option value="Sesame">Sesame</option>
+            <option value="Soybeans">Soybeans</option>
+            <option value="Sulphites">Sulphites</option>
+            <option value="Treenuts">Treenuts</option>
+          </select>
+          <label>Allergens</label>
+        </div>
+        <br>
+
+
+
+
+        <input type="submit" value="Add" class="btn waves-effect waves-red" style="left:20%;"><i
+          class="material-icons right"></i>
+      </form>
+
+      <br> <br>
+    </div>
+
+
+    <div class="container" id="productList" style="width: 80%">
+
+
+
+    </div>
+
+
+  </div>
+
+  <br>
+
+  <hr>
+
+  <div>
+
+    <div class="container" id="productContainer" style="width: 80%">
+
+    </div>
+  </div>
+
+
+  <!-- Edit Modal -->
+  <div id="modal-edit" class="modal">
+
+    <container>
+
+      <div class="container">
+        <h4>Edit Product</h4><br />
+
+
+        <form>
+          <div class="input-field" id="categoryName">
+            <select>
+
+              <option value="Starters">Starters</option>
+              <option value="Classics">Classics</option>
+              <option value="Fries">Fries</option>
+              <option value="Pizza">Pizza</option>
+              <option value="Maccaroni">Maccaroni</option>
+              <option value="Vegan">Vegan</option>
+              <option value="Sandwich">Sandwich</option>
+              <option value="Kids">Kids</option>
+              <option value="Salad">Salad</option>
+              <option value="Side">Side</option>
+              <option value="Burger">Burger</option>
+              <option value="Dessert">Dessert</option>
+            </select>
+            <label>Product Type</label>
+          </div> <br>
+
+
+          <div class="input-field">
+            <input type="text" id="productname" />
+            <label for="name">Product name</label>
+          </div>
+
+          <div class="input-field">
+            <input type="number" min="1" step="any" id="productPrice" />
+            <label for="price">Product Price</label>
+          </div>
+
+          <div class="input-field">
+            <input type="text" id="description" />
+            <label for="Category">Description</label>
+          </div>
+
+          <div class="input-field">
+            <select multiple id="allergen">
+              <option value="Celery">Celery</option>
+              <option value="Gluten">Gluten</option>
+              <option value="Crustaceans">Crustaceans</option>
+              <option value="Egg">Egg</option>
+              <option value="Fish">Fish</option>
+              <option value="Lupin">Lupin</option>
+              <option value="Milk">Milk</option>
+              <option value="Molluscs">Molluscs</option>
+              <option value="Mustard">Mustard</option>
+              <option value="Peanuts">Peanuts</option>
+              <option value="Sesame">Sesame</option>
+              <option value="Soybeans">Soybeans</option>
+              <option value="Sulphites">Sulphites</option>
+              <option value="Treenuts">Treenuts</option>
+            </select>
+            <label>Allergens</label>
+          </div>
+
+
+
+
+
+          <button class="btn yellow darken-2 z-depth-0" onclick="editProduct(this)">Edit</button>
+        </form>
+      </div>
+      <br> <br>
+  </div>
+
+
+
+
+  </div>
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var elems = document.querySelectorAll('select');
+      M.FormSelect.init(elems);
+    });
+  </script>
